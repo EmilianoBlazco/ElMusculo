@@ -9,6 +9,8 @@ class DiasEntrenamiento extends Model
 {
     use HasFactory;
 
+    protected $table = 'dias_entrenamiento';
+
     /**
      * Get the users associated with the dias_entrenamiento.
      */
