@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>El MÚSCULO</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -291,53 +291,70 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
+        /*[
             'type'         => 'navbar-search',
             'text'         => 'search',
             'topnav_right' => true,
-        ],
-        [
+        ],*/
+       /* [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
+        ],*/
+        //boton de logout color rojo
+        [
+            'text' => 'logout',
+            'url'  => 'logout',
+            'icon' => 'fas fa-fw fa-power-off',
+            'topnav_right' => true,
+            'classes' => 'btn btn-info',
         ],
 
         // Sidebar items:
-        [
+        /*[
             'type' => 'sidebar-menu-search',
             'text' => 'search',
-        ],
+        ],*/
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        [
+       /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
+        ],*/
+        ['header' => 'Datos de perfil'],
         [
-            'text' => 'profile',
+            'text' => 'Perfil',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
-        [
+       /* [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-        ],
+        ],*/
+        ['header' => 'Datos de entrenamiento'],
         [
-            'text'    => 'multilevel',
+            'text'    => 'Entrenamiento',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
+                    'text' => 'Ingresar entrenamiento realizado',
                     'url'  => '#',
                 ],
                 [
+                    'text' => 'Consultar volumen semanal',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Calificar tutor',
+                    'url'  => '#',
+                ],
+               /* [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
@@ -360,14 +377,10 @@ return [
                             ],
                         ],
                     ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
+                ],*/
             ],
         ],
-        ['header' => 'labels'],
+        /*['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',
@@ -382,7 +395,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ],*/
     ],
 
     /*
@@ -466,7 +479,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

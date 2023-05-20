@@ -7,6 +7,7 @@ use App\Models\Genero;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AutenticacionController extends Controller{
 
@@ -31,7 +32,7 @@ class AutenticacionController extends Controller{
 
         $user = new User();
         $user->tipo_usuario = $request->tipo_usuario;
-        $user->password = bcrypt($request->password);
+        $user->password = Hash::make($request->password);
         $user->nombre = $request->nombre;
         $user->apellido = $request->apellido;
         $user->dni = $request->dni;
@@ -45,12 +46,14 @@ class AutenticacionController extends Controller{
         $user->fecha_inicio = $request->fecha_inicio;
         $user->genero_id = $request->genero;
 
-        //escribir en la tabal dias de entrenamiento
+        $user->save();
 
-        dd($request->all(),$user);
+        Auth::login($user);
 
+        //almacenar los dias de entrenamiento
+        $user->diasEntrenamiento()->attach($request->dias_entrenamiento);
 
-        return redirect()->route('aut.login')->with('mensaje','Usuario registrado exitosamente');
+        return redirect()->route('principal')->with('registro','ok');
     }
 
     public function login(){
@@ -58,23 +61,29 @@ class AutenticacionController extends Controller{
     }
 
     public function loging(Request $request){
-        $request->validate([
-            'email' => 'required|max:255',
-            'password' => 'required|max:255',
-        ]);
 
-        $credenciales = $request->only('email','password');
+        //validaciones
+
+        $credenciales = $request->only('dni','password');
 
         if(Auth::attempt($credenciales)){
-            return redirect()->route('numerosAleatorios.indexF');
+
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('principal'))->with('login','ok');
+
         }else{
-            return redirect()->route('aut.login')->with('mensaje','Credenciales incorrectas');
+            return redirect()->route('aut.login')->with('login','no');
         }
     }
 
-    public function logout(){
+    public function logout(Request $request){
         Auth::logout();
-        return redirect()->route('aut.login')->with('mensaje','Sesion cerrada exitosamente');
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('aut.login');
     }
 
 }

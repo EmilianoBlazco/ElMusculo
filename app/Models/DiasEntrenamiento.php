@@ -16,6 +16,6 @@ class DiasEntrenamiento extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'dias_entrenamiento_user');
+        return $this->belongsToMany(User::class, 'dias_entrenamiento_user', 'dias_entrenamiento_id', 'user_id');
     }
 }

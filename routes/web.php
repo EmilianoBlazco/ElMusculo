@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteEntrenadorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutenticacionController;
 
@@ -27,6 +28,13 @@ Route::post('/registrando', [AutenticacionController::class,'guardar'])->name('a
 Route::get('/login', [AutenticacionController::class,'login'])->name('aut.login');//Ruta para mostrar el formulario de login
 Route::post('/loging', [AutenticacionController::class,'loging'])->name('aut.loging');//Ruta para logearse
 Route::get('/logout', [AutenticacionController::class,'logout'])->name('aut.logout');//Ruta para cerrar sesion
+
+//Ruta de funcionalidades genrales
+//TODO: verificar middleware
+Route::get('/principal', [ClienteEntrenadorController::class,'index'])->middleware('auth')->name('principal');//Ruta para mostrar la pagina principal
+
+//establecer middleware para que solo puedan acceder a las rutas los usuarios autenticados
+
 
 //Rutas general
 /*Route::get('/index', [AutenticacionController::class,'principal'])->name('');*/
