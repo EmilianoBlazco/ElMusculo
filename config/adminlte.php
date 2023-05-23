@@ -310,33 +310,17 @@ return [
         ],
 
         // Sidebar items:
-        /*[
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],*/
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-       /* [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],*/
         ['header' => 'Datos de perfil'],
         [
             'text' => 'Perfil',
-            'url'  => 'admin/settings',
+            'url'  => 'perfil/{perfil}/edit',
             'icon' => 'fas fa-fw fa-user',
         ],
-       /* [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],*/
         ['header' => 'Datos de entrenamiento'],
         [
             'text'    => 'Entrenamiento',
@@ -354,32 +338,45 @@ return [
                     'text' => 'Calificar tutor',
                     'url'  => '#',
                 ],
-               /* [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],*/
             ],
         ],
+        ['header' => 'Administración de usuarios'],
+        [
+            'text'    => 'Usuarios',
+            'icon'    => 'fas fa-solid fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Usuarios registrados',
+                    'url'  => '/usuarios',
+                ],
+            ],
+        ],
+
+
+        /* [
+                   'text'    => 'level_one',
+                   'url'     => '#',
+                   'submenu' => [
+                       [
+                           'text' => 'level_two',
+                           'url'  => '#',
+                       ],
+                       [
+                           'text'    => 'level_two',
+                           'url'     => '#',
+                           'submenu' => [
+                               [
+                                   'text' => 'level_three',
+                                   'url'  => '#',
+                               ],
+                               [
+                                   'text' => 'level_three',
+                                   'url'  => '#',
+                               ],
+                           ],
+                       ],
+                   ],
+               ],*/
         /*['header' => 'labels'],
         [
             'text'       => 'important',
@@ -396,7 +393,24 @@ return [
             'icon_color' => 'cyan',
             'url'        => '#',
         ],*/
+        /* [
+            'text' => 'change_password',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-lock',
+        ],*/
+        /* [
+            'text'        => 'pages',
+            'url'         => 'admin/pages',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],*/
+        /*[
+            'type' => 'sidebar-menu-search',
+            'text' => 'search',
+        ],*/
     ],
+
 
     /*
     |--------------------------------------------------------------------------

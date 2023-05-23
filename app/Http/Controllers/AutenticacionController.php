@@ -23,37 +23,48 @@ class AutenticacionController extends Controller{
 
     public function guardar(Request $request){
 
+        // Verificar si existe una cuenta deshabilitada con los datos proporcionados
+        $usuarioExistente = User::get()->where('dni', trim($request->dni))
+            ->where('estado_cuenta', 0)
+            ->first();
 
-   /*     $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|max:255|unique:users',
-            'password' => 'required|max:255',
-        ]);*/
+        if ($usuarioExistente) {
+            // Si se encuentra una cuenta deshabilitada, redireccionar con un mensaje de error
+            return redirect()->route('aut.login')->with('registro', 'existe');
+        }else {
+            // Si no se encuentra una cuenta deshabilitada, continuar con el proceso de login
 
-        $user = new User();
-        $user->tipo_usuario = $request->tipo_usuario;
-        $user->password = Hash::make($request->password);
-        $user->nombre = $request->nombre;
-        $user->apellido = $request->apellido;
-        $user->dni = $request->dni;
-        $user->fecha_nacimiento = $request->fecha_nacimiento;
-        $user->actividad_fisica = $request->actividad_fisica;
-        $user->peso = $request->peso;
-        $user->altura = $request->altura;
-        $user->condicion_medica = $request->condicion_medica;
-        $user->email = $request->correo;
-        $user->telefono = $request->telefono;
-        $user->fecha_inicio = $request->fecha_inicio;
-        $user->genero_id = $request->genero;
+            /*     $request->validate([
+                     'name' => 'required|max:255',
+                     'email' => 'required|max:255|unique:users',
+                     'password' => 'required|max:255',
+                 ]);*/
 
-        $user->save();
+            $user = new User();
+            $user->tipo_usuario = $request->tipo_usuario;
+            $user->password = Hash::make($request->password);
+            $user->nombre = $request->nombre;
+            $user->apellido = $request->apellido;
+            $user->dni = $request->dni;
+            $user->fecha_nacimiento = $request->fecha_nacimiento;
+            $user->actividad_fisica = $request->actividad_fisica;
+            $user->peso = $request->peso;
+            $user->altura = $request->altura;
+            $user->condicion_medica = $request->condicion_medica;
+            $user->email = $request->correo;
+            $user->telefono = $request->telefono;
+            $user->fecha_inicio = $request->fecha_inicio;
+            $user->genero_id = $request->genero;
 
-        Auth::login($user);
+            $user->save();
 
-        //almacenar los dias de entrenamiento
-        $user->diasEntrenamiento()->attach($request->dias_entrenamiento);
+            Auth::login($user);
 
-        return redirect()->route('principal')->with('registro','ok');
+            //almacenar los dias de entrenamiento
+            $user->diasEntrenamiento()->attach($request->input('dias'));
+/*            dd($request->all());*/
+            return redirect()->route('principal')->with('registro', 'ok');
+        }
     }
 
     public function login(){
@@ -62,19 +73,34 @@ class AutenticacionController extends Controller{
 
     public function loging(Request $request){
 
-        //validaciones
+        // Verificar si existe una cuenta deshabilitada con los datos proporcionados
+        $usuarioExistente = User::get()->where('dni', trim($request->dni))
+            ->where('estado_cuenta', 0)
+            ->first();
 
-        $credenciales = $request->only('dni','password');
+/*        dd($request->all(),$usuarioExistente);*/
 
-        if(Auth::attempt($credenciales)){
-
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('principal'))->with('login','ok');
-
+        if ($usuarioExistente) {
+            // Si se encuentra una cuenta deshabilitada, redireccionar con un mensaje de error
+            return redirect()->route('aut.login')->with('login', 'existe');
         }else{
-            return redirect()->route('aut.login')->with('login','no');
+            // Si no se encuentra una cuenta deshabilitada, continuar con el proceso de login
+
+            //validaciones
+
+            $credenciales = $request->only('dni','password');
+
+            if(Auth::attempt($credenciales)){
+
+                $request->session()->regenerate();
+
+                return redirect()->intended(route('principal'))->with('login','ok');
+
+            }else{
+                return redirect()->route('aut.login')->with('login','no');
+            }
         }
+
     }
 
     public function logout(Request $request){

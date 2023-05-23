@@ -159,7 +159,7 @@
                                 <h3 class="multisteps-form__title">Hablenos un poco de sus condiciones medicas</h3>
                                 <div class="multisteps-form__content">
 
-                                    <h6 class="mt-4">¿Realizo alguna actividad física recientemente?</h6>
+                                    <h6 class="mt-4">¿Ha realizado alguna actividad física recientemente?(1 mes a menos)</h6>
                                     <div class="form-row mt-4 shadow-none p-3 mb-5 bg-light rounded">
 
                                         <div class="custom-control custom-radio custom-control-inline">

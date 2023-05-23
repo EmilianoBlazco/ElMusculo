@@ -95,5 +95,22 @@
         text: 'Usuario o contraseña incorrectos',
     })
     @endif
+
+    @if(session('login') == 'existe' || session('registro') == 'existe')
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Parece que usted ya poseía una cuenta en nuestro sistema. ' +
+            'Si desea volver a habilitarla, comuníquese con la administración del gimnasio',
+    })
+    @endif
+
+    @if(session('baja') == 'ok')
+    Swal.fire({
+        icon: 'success',
+        title: 'Completado!!',
+        text: 'Su cuenta fue dada de baja correctamente',
+    })
+    @endif
 </script>
 {{--Alertas--}}
