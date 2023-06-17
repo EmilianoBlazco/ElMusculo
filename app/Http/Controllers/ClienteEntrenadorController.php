@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DiasEntrenamiento;
 use App\Models\Genero;
+use App\Models\ObjetivosEntrenamiento;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,22 @@ class ClienteEntrenadorController extends Controller
         $dias_entrenamiento = DiasEntrenamiento::get();
 
         return view('perfil.edit',compact('usuario','generos','dias_entrenamiento'));
+    }
+
+    public function obj(){
+
+        $usuario = User::get()->where('id',auth()->user()->id)->first();
+        $objetivos = ObjetivosEntrenamiento::get();
+
+        return view('perfil.editObj',compact('objetivos','usuario'));
+    }
+
+    public function obj_update(Request $request, $perfil){
+
+        $user = User::get()->where('id',$perfil)->first();
+        $user->objetivosEntrenamiento()->sync($request->input('objetivos'));
+
+        return redirect()->back()->with('editar','ok');
     }
 
     public function perfil_update(Request $request, $perfil)

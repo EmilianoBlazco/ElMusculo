@@ -12,20 +12,8 @@ class AdminController extends Controller
     public function index(){
 
         //TODO: terminar paginacion
-        //si la cantidad de usuarios es mayor a 10, paginar
-        if (User::where('estado_cuenta',1)->count() > 10) {
             $usuariosActivos = User::where('estado_cuenta',1)->paginate(10);
-        }else{
-            $usuariosActivos = User::where('estado_cuenta',1)->get();
-        }
-
-        if (User::where('estado_cuenta',0)->count() > 10) {
             $usuariosInactivos = User::where('estado_cuenta',0)->paginate(10);
-        }else{
-            $usuariosInactivos = User::where('estado_cuenta',0)->get();
-        }
-
-        dd($usuariosActivos,$usuariosInactivos,User::where('estado_cuenta',1)->count(),User::where('estado_cuenta',0)->count());
 
         return view('admin.usuarios.index',compact('usuariosActivos','usuariosInactivos'));
 

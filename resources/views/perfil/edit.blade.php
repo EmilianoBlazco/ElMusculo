@@ -8,7 +8,7 @@
     <div class="text-right">
         <form action="{{ route('perfil.update', ['perfil' => Auth::user()->id]) }}" method="POST" id="perfilFormdeshabilitar">
             @csrf @method('PATCH')
-            <button type="submit" class="btn btn-danger">Deshabilitar cuenta</button>
+            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-down-left-and-up-right-to-center"></i> Deshabilitar cuenta</button>
             {{--Campo oculto para saber que actualizamos datos--}}
             <input type="hidden" name="baja" value="1">
         </form>
@@ -229,19 +229,11 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-8">
                                 <div class="form-group">
                                     <h6 class="multisteps-form__title">¿Qué días piensa asistir al gimnasio?</h6>
                                     <div class="multisteps-form__content">
-                                        <div class="form-row mt-2 shadow-none p-3 mb-2 bg-light rounded">{{--
-                                    @foreach($dias_entrenamiento as $dias)
-                                        <div class="col form-check-inline">
-                                            <div class="custom-control custom-checkbox">
-                                                <label class="custom-control-label" for="{{$dias->id}}">{{$dias->dias}}</label>
-                                                <input type="checkbox" name="dias[]" value="{{$dias->id}}" id="{{$dias->id}}" class="custom-control-input" checked="checked">
-                                            </div>
-                                        </div>
-                                    @endforeach--}}
+                                        <div class="form-row mt-2 shadow-none p-3 mb-2 bg-light rounded">
                                             @foreach($dias_entrenamiento as $dias)
                                                 <div class="col form-check-inline">
                                                     <div class="form-check">
@@ -258,7 +250,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="inputFechaInicio">Fecha de inicio (*)</label>
                                     <input class="form-control" name="fecha_inicio" type="date" value="{{ old('fecha_inicio',date('Y-m-d',strtotime($usuario->fecha_inicio))) }}" id="inputFechaInicio">
@@ -271,7 +263,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-success mt-3">Guardar cambios</button>
+                    <button type="submit" class="btn btn-success mt-3">Guardar cambios <i class="fa-solid fa-floppy-disk"></i></button>
                 </div>
             </form>
         </div>
@@ -279,13 +271,13 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 {{--@vite(['resources/css/material-kit.css','resources/css/multistep.css', 'resources/js/multistep.js', 'resources/js/material-kit.js'])--}}
 
 @stop
 
 @section('js')
     {{--Estilo de bootstrap--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -293,6 +285,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
     {{--Jquery--}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{--Font Awesome--}}
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{--Alertas--}}
     <script>

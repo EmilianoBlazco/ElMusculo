@@ -35,21 +35,37 @@ return new class extends Migration
         Schema::create('genero', function (Blueprint $table) {
             $table->id();
             $table->string('generos');
+            $table->timestamps();
         });
 
         Schema::create('dias_entrenamiento', function (Blueprint $table) {
             $table->id();
             $table->string('dias');
+            $table->timestamps();
         });
 
         Schema::create('dias_entrenamiento_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('dias_entrenamiento_id')->constrained('dias_entrenamiento');
             $table->foreignId('user_id')->constrained('users');
+            $table->timestamps();
         });
 
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('genero_id')->constrained('genero');
+        });
+
+        Schema::create('objetivo', function (Blueprint $table) {
+            $table->id();
+            $table->string('objetivos');
+            $table->timestamps();
+        });
+
+        Schema::create('objetivo_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('objetivo_id')->constrained('objetivo');
+            $table->foreignId('user_id')->constrained('users');
+            $table->timestamps();
         });
     }
 

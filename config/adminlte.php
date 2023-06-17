@@ -64,11 +64,11 @@ return [
     */
 
     'logo' => '<b>El MÚSCULO</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img' => 'img/musculo_blanco.png',
+    'logo_img_class' => 'brand-image',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'Logo autenticado',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,8 +109,8 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'img/musculo_negro.png',
+            'alt' => 'Imagen de carga',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -324,9 +324,13 @@ return [
         ['header' => 'Datos de entrenamiento'],
         [
             'text'    => 'Entrenamiento',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-solid fa-dumbbell',
             'submenu' => [
                 [
+                    'text' => 'Objetivos del entrenamiento',
+                    'url'  => '/perfil/{perfil}/obj',
+                ],
+                /*[
                     'text' => 'Ingresar entrenamiento realizado',
                     'url'  => '#',
                 ],
@@ -337,6 +341,17 @@ return [
                 [
                     'text' => 'Calificar tutor',
                     'url'  => '#',
+                ],*/
+            ],
+        ],
+        ['header' => 'Datos de entrenamientos'],
+        [
+            'text'    => 'Entrenamiento',
+            'icon'    => 'fas fa-solid fa-dumbbell',
+            'submenu' => [
+                [
+                    'text' => 'Ejercicios',
+                    'url'  => '/ejercicios',
                 ],
             ],
         ],

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DiasEntrenamiento;
 use App\Models\Genero;
+use App\Models\ObjetivosEntrenamiento;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,9 @@ class AutenticacionController extends Controller{
 
         $generos = Genero::get();
         $dias_entrenamiento = DiasEntrenamiento::get();
+        $objetivos = ObjetivosEntrenamiento::get();
 
-/*        dd($generos);*/
-
-        return view('autenticacion.registrar',compact('generos','dias_entrenamiento'));
+        return view('autenticacion.registrar',compact('generos','dias_entrenamiento','objetivos'))->with('registro', 'avisar');
     }
 
     public function guardar(Request $request){
@@ -62,6 +62,10 @@ class AutenticacionController extends Controller{
 
             //almacenar los dias de entrenamiento
             $user->diasEntrenamiento()->attach($request->input('dias'));
+            //almacenar los objetivos de entrenamiento
+            $user->objetivosEntrenamiento()->attach($request->input('objetivos'));
+
+/*            dd($user,$request->all());*/
 /*            dd($request->all());*/
             return redirect()->route('principal')->with('registro', 'ok');
         }
@@ -111,5 +115,4 @@ class AutenticacionController extends Controller{
 
         return redirect()->route('aut.login');
     }
-
 }
