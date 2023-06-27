@@ -16,7 +16,7 @@
 
             <div class="card-body">
 
-                <form action="{{route('ejercicios.update',$ejercicio)}}" method="POST">
+                <form action="{{route('ejercicios.update',$ejercicio)}}" method="POST" id="formulario">
                     @csrf
                     @method('PATCH')
                     <div class="row">
@@ -25,8 +25,8 @@
                             <div class="form-group">
                                 <label for="inputNombre">Nombre del ejercicio (*)</label>
                                 <input class="form-control" name="nombre" type="text" value="{{ old('nombre',$ejercicio->nombre)}}" id="inputNombre">
+                                <div class="text-danger" id="divNombre"></div>
                             </div>
-                            <div class="text-danger" id="divNombre"></div>
 
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                                 <div class="form-group">
                                     <label class="form-label">Breve descripción del ejercicio</label>
                                     <textarea class="form-control" name="descripcion" id="inputDescripcion">{{old('descripcion',$ejercicio->descripcion)}}</textarea>
+                                    <div class="text-danger" id="divDescripcion"></div>
                                 </div>
-                                <div class="text-danger" id="divDescripcion"></div>
                         </div>
                     </div>
 
@@ -62,6 +62,7 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                    <div class="text-danger" id="divMusculos"></div>
                                 </div>
                             </div>
                         </div>
@@ -89,8 +90,12 @@
     <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    {{--jquery cdn--}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     {{--SweetAlert--}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     {{--Alerta de SweetAlert--}}
     <script>
         @if(session('crear') == 'ok')
@@ -132,36 +137,71 @@
             });
         });
     </script>
+    {{--Validación de formulario--}}
     <script>
-        // Obtener los checkboxes de los grupos y los individuales
-        const checkboxesGrupo = document.querySelectorAll('.checkbox-grupo');
-        const checkboxesIndividuales = document.querySelectorAll('.checkbox-individual');
+        $(document).ready(function() {
+            console.log("Evento 'input' o 'change' ejecutado.");
 
-        // Agregar event listener para los checkboxes de los grupos
-        checkboxesGrupo.forEach(function(checkboxGrupo) {
-            checkboxGrupo.addEventListener('change', function() {
-                const isChecked = checkboxGrupo.checked;
-
-                // Marcar o desmarcar los checkboxes individuales del grupo
-                checkboxesIndividuales.forEach(function(checkboxIndividual) {
-                    checkboxIndividual.checked = isChecked;
-                });
+            $('#inputNombre').on('input change', function() {
+                console.log("Evento 'input' o 'change' ejecutado.");
+                var input = $(this);
+                // cambiar la clase de los inputs
+                if (input.val() === '') {
+                    // Agregar clase de error al elemento padre adecuado
+                    input.parents('.form-group').removeClass('is-valid');
+                    input.parents('.form-group').addClass('is-invalid');
+                } else {
+                    // Agregar clase de éxito al elemento padre adecuado
+                    input.parents('.form-group').removeClass('is-invalid');
+                    input.parents('.form-group').addClass('is-valid');
+                }
             });
-        });
 
-        // Agregar event listener para los checkboxes individuales
-        checkboxesIndividuales.forEach(function(checkboxIndividual) {
-            checkboxIndividual.addEventListener('change', function() {
-                const grupoCheckbox = checkboxIndividual.closest('.form-group').querySelector('.checkbox-grupo');
+            // si hay una clase is-invalid en el padre del input entonces no se puede enviar el formulario
+            $('#formulario').on('submit', function(e) {
+                var nombreInput = $('#inputNombre');
+                var nombreDiv = $('#divNombre');
+                var musculosDiv = $('#divMusculos');
 
-                // Verificar si todos los checkboxes individuales del grupo están seleccionados
-                const todosSeleccionados = Array.from(checkboxIndividual.closest('.form-group').querySelectorAll('.checkbox-individual'))
-                    .every(function(checkbox) {
-                        return checkbox.checked;
+                if (nombreInput.val() === '') {
+                    nombreDiv.text('El campo nombre es obligatorio.');
+                    nombreDiv.show();
+                    nombreInput.removeClass('is-valid');
+                    nombreInput.addClass('is-invalid');
+                    e.preventDefault();
+                } else {
+                    nombreDiv.hide();
+                    nombreInput.removeClass('is-invalid');
+                    nombreInput.addClass('is-valid');
+                }
+
+                // Verificar si al menos se ha seleccionado un checkbox
+                var checkboxesSeleccionados = $('.form-check-input:checked').length;
+
+                if (checkboxesSeleccionados === 0) {
+                    e.preventDefault();
+                    musculosDiv.text('Seleccione al menos un grupo de músculos');
+                    musculosDiv.show();
+                    swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Debe seleccionar al menos un grupo de músculos",
                     });
+                }else {
+                    musculosDiv.hide();
+                }
 
-                // Marcar o desmarcar el checkbox del grupo
-                grupoCheckbox.checked = todosSeleccionados;
+                // Verificar si hay algún campo con la clase is-invalid
+                var error = $(this).find('.is-invalid').length > 0;
+
+                if (error) {
+                    e.preventDefault();
+                    swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Hay campos que poseen errores, por favor verifique los datos ingresados",
+                    });
+                }
             });
         });
     </script>
